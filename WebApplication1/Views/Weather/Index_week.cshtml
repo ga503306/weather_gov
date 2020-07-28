@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index_week";
+    List<WebApplication1.Models.Weatherweek> weather = ViewBag.weather;
+}
+
+@foreach (WebApplication1.Models.Weatherweek wh in weather)
+{
+    <h2 style="text-align: center;">@wh.地點</h2>
+    <hr SIZE=9>
+    <table>
+        <tr>
+            <th>時間</th>
+            <th>平均溫度</th>
+            <th>平均露點溫度</th>
+            <th>平均相對濕度</th>
+            <th>最高溫度</th>
+            <th>最低溫度</th>
+            <th>最高體感溫度</th>
+            <th>最低體感溫度</th>
+            <th>最大舒適度指數</th>
+            <th>最小舒適度指數</th>
+            <th>12小時降雨機率</th>
+            <th>風向</th>
+            <th>最大風速</th>
+            <th>天氣現象</th>
+            <th>紫外線指數</th>
+            <th>天氣預報綜合描述</th>
+        </tr>
+        @foreach (WebApplication1.Models.Weatherweek_detail whd in wh.Weatherweek_detail)
+        {
+            <tr>
+                <td width="5%">@whd.時間</td>
+                <td width="5%">@whd.平均溫度</td>
+                <td width="5%">@whd.平均露點溫度</td>
+                <td width="5%">@whd.平均相對濕度</td>
+                <td width="5%">@whd.最高溫度</td>
+                <td width="5%">@whd.最低溫度</td>
+                <td width="5%">@whd.最高體感溫度</td>
+                <td width="5%">@whd.最低體感溫度</td>
+                <td width="5%">@whd.最大舒適度指數</td>
+                <td width="5%">@whd.最小舒適度指數</td>
+                <td width="5%">@whd.十二小時降雨機率</td>
+                <td width="5%">@whd.風向</td>
+                <td width="5%">@whd.最大風速</td>
+                <td width="5%">@whd.天氣現象</td>
+                <td width="5%">@whd.紫外線指數</td>
+                <td width="5%">@whd.天氣預報綜合描述</td>
+            </tr>
+        }
+    </table>
+}
+
