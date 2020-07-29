@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
@@ -122,7 +127,8 @@ namespace WebApplication1.Controllers
                                     XmlElement xeD = (XmlElement)xnC;
                                     XmlNodeList xnlD = xeD.ChildNodes;
                                     index = Weather_details.FindIndex(x => (x.時間 == xnlD[0].InnerText));
-                                    Weather_details[index].天氣現象 = xnlD[2].ChildNodes[0].InnerText;
+                                    //Weather_details[index].天氣現象 = xnlD[2].ChildNodes[0].InnerText;//中文
+                                    Weather_details[index].天氣現象 = "https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/" + xnlD[3].ChildNodes[0].InnerText +".svg";//圖
                                 }
                                 if (xnC.Name == "time" && state == "WeatherDescription")
                                 {
@@ -305,6 +311,42 @@ namespace WebApplication1.Controllers
             }
             Weathers.RemoveAt(0);
             ViewBag.weather = Weathers;
+            return View();
+        }
+
+        public ActionResult Index_json()
+        {
+            List<Weather> Weathers = new List<Weather>();
+            int index = 0;
+            JArray jsondata = DB_function.getjson("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-D0047-065?Authorization=CWB-BC2E6A08-130F-4DCA-B26C-8E5ADF09F133&downloadType=WEB&format=JSON");
+            foreach (JObject data in jsondata)//38地區
+            {
+                List<Weather_detail> weather_details = new List<Weather_detail>();
+                string loactionname = (string)data["locationName"]; //地名
+                foreach (JObject data_type in data["weatherElement"])//11種資訊
+                {
+                    if (data_type["elementName"].ToString() == "T")
+                    {
+                        foreach (JObject data_detail in data_type["time"])//24時間
+                        {
+                            string 時間 = Convert.ToDateTime(data_detail["dataTime"]).ToString("yyyy/MM/dd HH:mm:ss");
+                            string 溫度 = (string)data_detail["elementValue"]["value"] + (string)data_detail["elementValue"]["measures"];
+                            weather_details.Add(new Weather_detail { 時間 = 時間, 溫度 = 溫度 });
+                        }
+                    }
+                    else if (data_type["elementName"].ToString() == "Td")
+                    {
+                        foreach (JObject data_detail in data_type["time"])//24時間
+                        {
+                            index = weather_details.FindIndex(x => (x.時間 == Convert.ToDateTime(data_detail["dataTime"]).ToString("yyyy/MM/dd HH:mm:ss")));
+                            weather_details[index].露點溫度 = (string)data_detail["elementValue"]["value"] + (string)data_detail["elementValue"]["measures"];
+                        }
+                    }
+                    //以下省
+                }
+                Weathers.Add(new Weather { 地點 = loactionname, Weather_detail = weather_details });
+                ViewBag.weather = Weathers;
+            }
             return View();
         }
 
