@@ -1,4 +1,4 @@
-﻿
+﻿@model WebApplication1.Models.Weather_detail
 @{
     ViewBag.Title = "Index";
     List<WebApplication1.Models.Weather> weather = ViewBag.weather;
@@ -10,7 +10,19 @@
     <hr SIZE=9>
     <table>
         <tr>
-            <th>時間</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().時間)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().溫度)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().露點溫度)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().相對溼度)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().六小時降雨機率)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().十二小時降雨機率)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().風向)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().風速)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().舒適度指數)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().體感溫度)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().天氣現象)</th>
+            <th>@Html.DisplayNameFor(Model => wh.Weather_detail.First().天氣預報綜合描述)</th>
+            @*<th>時間</th>
             <th>溫度</th>
             <th>露點溫度</th>
             <th>相對濕度</th>
@@ -21,26 +33,26 @@
             <th>舒適度指數</th>
             <th>體感溫度</th>
             <th>天氣現象</th>
-            <th>天氣預報綜合描述</th>
+            <th>天氣預報綜合描述</th>*@
         </tr>
         @foreach (WebApplication1.Models.Weather_detail whd in wh.Weather_detail)
         {
-    <tr>
-        <td width="5%">@whd.時間</td>
-        <td width="5%">@whd.溫度</td>
-        <td width="5%">@whd.露點溫度</td>
-        <td width="5%">@whd.相對溼度</td>
-        <td width="5%">@whd.六小時降雨機率</td>
-        <td width="5%">@whd.十二小時降雨機率</td>
-        <td width="5%">@whd.風向</td>
-        <td width="5%">@whd.風速</td>
-        <td width="5%">@whd.舒適度指數</td>
-        <td width="5%">@whd.體感溫度</td>
-        @*<td width="5%">@whd.天氣現象</td>*@
-        @*<td width="5%"><img src="@whd.天氣現象" /></td>*@
-        <td width="5%"><img src="https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/@(whd.天氣現象).svg" /></td>
-        <td width="5%">@whd.天氣預報綜合描述</td>
-    </tr>
+            <tr>
+                <td width="5%">@whd.時間</td>
+                <td width="5%">@whd.溫度</td>
+                <td width="5%">@whd.露點溫度</td>
+                <td width="5%">@whd.相對溼度</td>
+                <td width="5%">@whd.六小時降雨機率</td>
+                <td width="5%">@whd.十二小時降雨機率</td>
+                <td width="5%">@whd.風向</td>
+                <td width="5%">@whd.風速</td>
+                <td width="5%">@whd.舒適度指數</td>
+                <td width="5%">@whd.體感溫度</td>
+                @*<td width="5%">@whd.天氣現象</td>*@
+                @*<td width="5%"><img src="@whd.天氣現象" /></td>*@
+                <td width="5%"><img src="https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/@(whd.天氣現象).svg" /></td>
+                <td width="5%">@whd.天氣預報綜合描述</td>
+            </tr>
         }
     </table>
 }

@@ -128,7 +128,8 @@ namespace WebApplication1.Controllers
                                     XmlNodeList xnlD = xeD.ChildNodes;
                                     index = Weather_details.FindIndex(x => (x.時間 == xnlD[0].InnerText));
                                     //Weather_details[index].天氣現象 = xnlD[2].ChildNodes[0].InnerText;//中文
-                                    Weather_details[index].天氣現象 = "https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/" + xnlD[3].ChildNodes[0].InnerText +".svg";//圖
+                                    //Weather_details[index].天氣現象 = "https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/" + xnlD[3].ChildNodes[0].InnerText +".svg";//圖
+                                    Weather_details[index].天氣現象 = xnlD[3].ChildNodes[0].InnerText;
                                 }
                                 if (xnC.Name == "time" && state == "WeatherDescription")
                                 {
